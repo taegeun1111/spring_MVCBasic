@@ -14,13 +14,16 @@ public class ControllerV2 {
 
     /**
      * 방법1. Model 사용하기
+     * /model/hobbies : GET
+     * hobbies.jsp파일로 이름정보와 취미목록 정보를 보내주고 싶을 때
      */
 
     @GetMapping("/hobbies")
     public String hobbies(Model model){
         String name = "멍멍이";
         List<String> hobbies = List.of("산책","밥먹기","낮잠");
-        model.addAttribute("n",name);
+        //key,value 형태
+        model.addAttribute("n", name);
         model.addAttribute("hList",hobbies);
         return "chap02/hobbies";
     }
@@ -49,7 +52,6 @@ public class ControllerV2 {
         mv.setViewName(viewName);
         mv.addObject("n",name);
         mv.addObject("hList",hList);
-
         return mv;
     }
 
