@@ -15,9 +15,10 @@ public class ControllerV1 {
     //세부요청들은 메서드를 통해 처리
     @RequestMapping("/hello") //http://localhost:8181/spring/hello
     public String hello() {
-        System.out.println("\n====== 헬로 요청이 들어옴 ======\n");
+        System.out.println("\n====== hello 요청이 들어옴 ======\n");
         //어떤 jsp를 열어줄지 경로 기입
-//        return "/WEB-INF/views/hello.jsp";
+
+//      return "/WEB-INF/views/hello.jsp";
         return "hello";
 
         //http://localhost:8181/spring/hello을 입력하면
@@ -41,13 +42,11 @@ public class ControllerV1 {
     //요청을 받는 메서드
     @RequestMapping("/person")
     public String person(HttpServletRequest request){
-
         String name = request.getParameter("name");
         String age = request.getParameter("age");
 
         System.out.println("name = " + name);
         System.out.println("age = " + age);
-
         return "";
     }
 
@@ -88,6 +87,7 @@ public class ControllerV1 {
     @RequestMapping("/order")
     public String order(OrderRequestDTO dto){
         System.out.println("dto = " + dto);
+//        int amount = dto.getAmount();
         return "";
     }
 
