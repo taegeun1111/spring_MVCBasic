@@ -48,6 +48,6 @@ public class Score {
 
     private void calcTotalAngAvg() {
         this.total = kor+eng+math;
-        this.average = total/3.0;
+        this.average =(Math.round((total/3.0)*100)/100);
     }
 }

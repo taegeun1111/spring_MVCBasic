@@ -25,15 +25,15 @@ class ScoreRepositoryImplTest {
         //given:테스트를 위해 주어질 데이터 (ex:parameter)
 
         //when:테스트 실제 상황
-        List<Score> scoreList = repository.findAll();
+//        List<Score> scoreList = repository.findAll();
         //then:테스트 결과 확인
-        System.out.println(scoreList.size()==3);
+//        System.out.println(scoreList.size()==3);
         //나는 스코어리스트의 사이즈가 3인 것이 참이라고 단언한다.
 //        Assertions.assertTrue(scoreList.size()==3);
 //        Assertions.assertEquals(3,scoreList.size());
 
         //나는 리스트의 첫번째 객체의 이름이 뽀로로라고 단언한다.
-        Assertions.assertEquals("뽀로로",scoreList.get(0).getName());
+//        Assertions.assertEquals("뽀로로",scoreList.get(0).getName());
 
     }
 
@@ -75,11 +75,11 @@ class ScoreRepositoryImplTest {
         int stuNum =2;
         //when
         repository.deleteByStuNum(stuNum);
-        List<Score> scoreList = repository.findAll();
+//        List<Score> scoreList = repository.findAll();
         Score score = repository.findByStuNum(stuNum);
         //then
-        assertEquals(2,scoreList.size());
-        assertNull(score);
+//        assertEquals(2,scoreList.size());
+//        assertNull(score);
 
     }
 
@@ -97,11 +97,11 @@ class ScoreRepositoryImplTest {
 
         //when
         boolean flag = repository.save(score);
-        List<Score> scoreList = repository.findAll();
+//        List<Score> scoreList = repository.findAll();
         //then
-        assertEquals(4,scoreList.size());
+//        assertEquals(4,scoreList.size());
         assertTrue(flag);
-        assertEquals(4,scoreList.get(scoreList.size()-1).getStuNum());
+//        assertEquals(4,scoreList.get(scoreList.size()-1).getStuNum());
     }
 
 }

@@ -1,12 +1,12 @@
 package com.spring.mvc.chap04.Repository;
 
-import com.spring.mvc.chap04.entity.Grade;
+import com.spring.mvc.chap04.controller.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 
@@ -26,9 +26,13 @@ public class ScoreRepositoryImpl implements ScoreRepository {
 
     static {
         scoreMap = new HashMap<>();
-        Score stu1 = new Score("뽀로로", 100, 50, 80, ++sequence, 0, 0, Grade.A);
-        Score stu2 = new Score("크롱", 70, 80, 100, ++sequence, 0, 0, Grade.A);
-        Score stu3 = new Score("꼬부기", 30, 40, 30, ++sequence, 0, 0, Grade.A);
+        Score stu1 = new Score(new ScoreRequestDTO("뽀로로",100,34,91));
+        Score stu2 = new Score(new ScoreRequestDTO("대길이",60,60,60));
+        Score stu3 = new Score(new ScoreRequestDTO("춘식이",50,40,30));
+
+        stu1.setStuNum(++sequence);
+        stu2.setStuNum(++sequence);
+        stu3.setStuNum(++sequence);
 
         scoreMap.put(stu1.getStuNum(), stu1);
         scoreMap.put(stu2.getStuNum(), stu2);
@@ -36,13 +40,34 @@ public class ScoreRepositoryImpl implements ScoreRepository {
     }
 
     @Override
+    public List<Score> findAll(String sort) {
+        Comparator<Score> comparing = comparing(Score::getStuNum);
+        switch (sort){
+            case "num" :
+                comparing = comparing(Score::getStuNum);
+                break;
+            case "name" :
+                comparing = comparing(Score::getName);
+                break;
+            case "avg" :
+                comparing = comparing(Score::getAverage).reversed();
+                break;
+        }
+
+        return scoreMap.values()
+                .stream()
+                .sorted(comparing)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Score> findAll() {
-        return new ArrayList<>(scoreMap.values())
+        return scoreMap.values()
                 .stream()
                 .sorted(comparing(Score::getStuNum))
                 .collect(Collectors.toList());
-
     }
+
 
     @Override
     public boolean save(Score score) {
@@ -53,7 +78,7 @@ public class ScoreRepositoryImpl implements ScoreRepository {
         score.setStuNum(++sequence);
 
         scoreMap.put(score.getStuNum(), score);
-        System.out.println(findAll());
+//        System.out.println(findAll());
         return true;
     }
 

@@ -3,6 +3,7 @@ package com.spring.mvc.chap04.Repository;
 import com.spring.mvc.chap04.entity.Score;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * 역할 명세(추상화) :
@@ -13,6 +14,9 @@ public interface ScoreRepository {
 
 
     //성적 정보 전체 목록 조회
+    default List<Score> findAll(String sort){
+        return null;
+    };
     List<Score> findAll();
 
     //성적 정보 등록

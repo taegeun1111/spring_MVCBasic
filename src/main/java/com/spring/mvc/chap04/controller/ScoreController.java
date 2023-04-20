@@ -4,17 +4,17 @@ package com.spring.mvc.chap04.controller;
 import com.spring.mvc.chap04.Repository.ScoreRepositoryImpl;
 import com.spring.mvc.chap04.controller.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 /**
@@ -44,6 +44,7 @@ public class ScoreController {
      * 클래스의 생성자가 단 1개라면
      * 자동 @Autowired를 써준다.
      * 하단 코드는 lombok을 사용하여
+     *
      * @RequiredArgsConstructor 또는 ,@AllArgsConstructor로 생성자를 만듦
      */
 //    @Autowired //자동 주입
@@ -53,9 +54,10 @@ public class ScoreController {
 
     //성적등록화면 띄우기 + 정보목록조회
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Score> slist = repository.findAll();
-        model.addAttribute("sList",slist);
+    public String list(Model model,@RequestParam(defaultValue = "num") String sort) {
+        List<Score> slist = repository.findAll(sort);
+
+        model.addAttribute("sList", slist);
         System.out.println("/score/list : GET");
         return "chap04/score-list";
     }
@@ -84,16 +86,27 @@ public class ScoreController {
         return "redirect:/score/list";
     }
 
-    @PostMapping("/remove")
-    public String remove() {
-        System.out.println("/score/remove : POST");
-        return "";
+    @GetMapping("/remove")
+    //URL에 ?로 온 것 읽기
+    public String remove(@RequestParam int stuNum) {
+        System.out.println("/score/remove : GET");
+        repository.deleteByStuNum(stuNum);
+
+        return "redirect:/score/list";
     }
 
     @GetMapping("/detail")
-    public String detail() {
+    public String detail(ScoreRequestDTO dto, Model model) {
         System.out.println("/score/detail : GET");
-        return "";
+        Score score = new Score(dto);
+        model.addAttribute("kor",score.getKor());
+        model.addAttribute("eng",score.getEng());
+        model.addAttribute("math",score.getMath());
+        model.addAttribute("name",score.getName());
+        model.addAttribute("total",score.getTotal());
+        model.addAttribute("average",score.getAverage());
+        model.addAttribute("grade",score.getGrade());
+        return "/chap04/score-detail";
     }
 
 }
