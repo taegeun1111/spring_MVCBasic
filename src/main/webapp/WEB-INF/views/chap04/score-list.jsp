@@ -1,4 +1,4 @@
-    <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -104,7 +104,7 @@
 
             <ul class="score-list">
                 <li class="list-header">
-                    <div class="count">총 학생 수: xxx명</div>
+                    <div class="count">총 학생 수: ${sList.size()}명</div>
                     <div class="sort-link-group">
                         <div><a href="#">학번순</a></div>
                         <div><a href="#">이름순</a></div>
@@ -113,14 +113,14 @@
 
                 </li>
 
-                
+                <c:forEach var="s" items="${sList}">
                     <li>
-                        # 학번: zzz, 이름: <a href="#">zzz</a>, 국어:
-                        zzz점,
-                        영어: zzz점, 수학: zzz점, 총점: zzz점
-                        , 평균: zzz점, 학점: zzz
+                        # 학번: ${s.stuNum}, 이름: <a href="#">${s.name}</a>, 
+                        국어: ${s.kor}점, 영어: ${s.eng}점, 수학: ${s.math}점, 
+                        총점: ${s.total}점, 평균: ${s.average}점, 학점: ${s.grade}
                         <a class="del-btn" href="#">삭제</a>
                     </li>
+                </c:forEach>
                 
             </ul>
 
@@ -152,7 +152,7 @@
         //홈화면으로 버튼 이벤트
         const $homeBtn = document.getElementById('go-home');
         $homeBtn.onclick = e => {
-            window.location.href = '/';
+            window.location.href = '/'; // GET요청
         };
     </script>
 

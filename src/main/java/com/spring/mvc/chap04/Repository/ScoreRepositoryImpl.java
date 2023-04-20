@@ -2,12 +2,15 @@ package com.spring.mvc.chap04.Repository;
 
 import com.spring.mvc.chap04.entity.Grade;
 import com.spring.mvc.chap04.entity.Score;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 
+@Repository //빈 등록 : 객체 생성 제어권을 스프링에게 위임(Component와 동일 명시적으로 하기 위해 사용)
 public class ScoreRepositoryImpl implements ScoreRepository {
 
     /**
