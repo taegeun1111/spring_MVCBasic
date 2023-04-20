@@ -46,6 +46,9 @@ public class ScoreRepositoryImpl implements ScoreRepository {
         if (scoreMap.containsKey(score.getStuNum())) {
             return false;
         }
+        //메서드 오류 점검 후 추가
+        score.setStuNum(++sequence);
+
         scoreMap.put(score.getStuNum(), score);
         return true;
     }

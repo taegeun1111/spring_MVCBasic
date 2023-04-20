@@ -1,6 +1,7 @@
 package com.spring.mvc.chap04.controller;
 
 
+import com.spring.mvc.chap04.Repository.ScoreRepositoryImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,12 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/score")
 public class ScoreController {
-
+    //저장소에 의존해야 데이터를 받아서 클라이언트에게 응답할 수 있다.
+    private ScoreRepositoryImpl repository
+            = new ScoreRepositoryImpl();
     //성적등록화면 띄우기 + 정보목록죄회
     @GetMapping("/list")
     public String list() {
         System.out.println("/score/list : GET");
-        return "";
+        return "chap04/score-list";
     }
 
     @PostMapping("/register")
