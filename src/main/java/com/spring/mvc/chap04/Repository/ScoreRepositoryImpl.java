@@ -53,6 +53,7 @@ public class ScoreRepositoryImpl implements ScoreRepository {
         score.setStuNum(++sequence);
 
         scoreMap.put(score.getStuNum(), score);
+        System.out.println(findAll());
         return true;
     }
 

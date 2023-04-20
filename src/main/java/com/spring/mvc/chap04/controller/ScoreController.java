@@ -2,6 +2,7 @@ package com.spring.mvc.chap04.controller;
 
 
 import com.spring.mvc.chap04.Repository.ScoreRepositoryImpl;
+import com.spring.mvc.chap04.controller.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -60,9 +61,27 @@ public class ScoreController {
     }
 
     @PostMapping("/register")
-    public String register() {
-        System.out.println("/score/register : POST");
-        return "";
+    public String register(ScoreRequestDTO dto) {
+        //입력데이터(쿼리스트링) 읽기
+        System.out.println("/socre/register dto = " + dto);
+
+        //dto로 추가한 데이터를 score로 변환해야 한다.
+        //dto(ScoreDTO)를 entity(Score)로 변환해야 한다.
+        Score score = new Score(dto);
+
+        //save명령
+        repository.save(score);
+        /*
+         등록요청에서 JSP 뷰 포워딩을 하면
+         갱신된 목록을 다시 한 번 저장소에서 불러와
+         모델에 담는 추가적인 코드가 필요하지만
+
+         리다이렉트를 통해서 위에 만든 /score/list : GET
+         을 자동으로 다시 보낼 수 있다면 번거로운 코드가
+         줄어들 수 있다. -> 리다이렉트
+         */
+        //"redirect : 요청URL"
+        return "redirect:/score/list";
     }
 
     @PostMapping("/remove")

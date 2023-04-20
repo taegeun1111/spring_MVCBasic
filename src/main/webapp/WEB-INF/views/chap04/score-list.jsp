@@ -81,7 +81,7 @@
 
         <section class="score">
             <h1>시험 점수 등록</h1>
-            <form action="#" method="POST">
+            <form action="/score/register" method="POST">
                 <label>
                     # 이름: <input type="text" name="name">
                 </label>
