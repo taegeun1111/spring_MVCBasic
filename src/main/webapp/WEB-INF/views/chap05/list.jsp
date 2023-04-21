@@ -68,12 +68,40 @@
 
 
                 </div>
+                
+                <div class="modal" id="modal">
+                    <div class="modal-content">
+                        <p>정말로 삭제할까요?</p>
+                        <div class="modal-buttons">
+                            <button class="confirm" id="confirmDelete"><i class="fas fa-check"></i> 예</button>
+                            <button class="cancel" id="cancelDelete"><i class="fas fa-times"></i> 아니오</button>   
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
 
 
             <script>
+                
+                //삭제버튼 스크립트
+                const $modal = document.getElementById('modal'); //모달창 열기
+                const $confrimDelete = document.getElementById('confirmDelete'); //확인버튼
+                const $cancelDelete = document.getElementById('cancelDelete'); //취소 버튼
+
+                $cardContainer.addEventListener('click', e => {
+                    if(e.target.matches('.card-btn-group *')){ //안에 태그가 많기 때문에
+                        console.log("삭제버튼 클릭");
+                        modal.style.display = flex;
+
+                        const $delBtn = e.target.closest('.del-btn');
+                    }
+                })
+
+
+
+
                 function removeDown(e) {
                     if (!e.target.matches('.card-container *')) return;
                     const $targetCard = e.target.closest('.card-wrapper');
