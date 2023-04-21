@@ -54,7 +54,7 @@ public class ScoreController {
 
     //성적등록화면 띄우기 + 정보목록조회
     @GetMapping("/list")
-    public String list(Model model,@RequestParam(defaultValue = "num") String sort) {
+    public String list(Model model, @RequestParam(defaultValue = "num") String sort) {
         List<Score> slist = repository.findAll(sort);
 
         model.addAttribute("sList", slist);
@@ -96,17 +96,32 @@ public class ScoreController {
     }
 
     @GetMapping("/detail")
-    public String detail(ScoreRequestDTO dto, Model model) {
-        System.out.println("/score/detail : GET");
-        Score score = new Score(dto);
-        model.addAttribute("kor",score.getKor());
-        model.addAttribute("eng",score.getEng());
-        model.addAttribute("math",score.getMath());
-        model.addAttribute("name",score.getName());
-        model.addAttribute("total",score.getTotal());
-        model.addAttribute("average",score.getAverage());
-        model.addAttribute("grade",score.getGrade());
+    public String detail(int stuNum, Model model) {
+        retrieve(stuNum, model);
+        model.addAttribute("stuNum", stuNum);
         return "/chap04/score-detail";
     }
 
+    @GetMapping("/change")
+    public String change(int stuNum, Model model) {
+        retrieve(stuNum, model);
+
+        return "/chap04/score-change";
+    }
+
+
+    @PostMapping("/endchange")
+    public String endChange(ScoreRequestDTO dto, int stuNum) {
+        Score score = repository.findByStuNum(stuNum);
+        score.setKor(dto.getKor());
+        score.setEng(dto.getEng());
+        score.setMath(dto.getMath());
+
+        return "redirect:/score/detail?stuNum=" + stuNum;
+    }
+
+    private void retrieve(int stuNum, Model model) {
+        Score score = repository.findByStuNum(stuNum);
+        model.addAttribute("s", score);
+    }
 }
