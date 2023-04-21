@@ -32,7 +32,7 @@ public class Score {
         calcGrade();
     }
 
-    private void calcGrade() {
+    public void calcGrade() {
         if(average >= 90){
             this.grade = A;
         }else if (average >= 80){
@@ -46,7 +46,7 @@ public class Score {
         }
     }
 
-    private void calcTotalAngAvg() {
+    public void calcTotalAngAvg() {
         this.total = kor+eng+math;
         this.average =(Math.round((total/3.0)*100)/100);
     }

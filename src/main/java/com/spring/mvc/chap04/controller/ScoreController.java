@@ -2,6 +2,7 @@ package com.spring.mvc.chap04.controller;
 
 
 import com.spring.mvc.chap04.Repository.ScoreRepositoryImpl;
+import com.spring.mvc.chap04.controller.dto.ScoreListResponseDTO;
 import com.spring.mvc.chap04.controller.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -55,10 +58,20 @@ public class ScoreController {
     //성적등록화면 띄우기 + 정보목록조회
     @GetMapping("/list")
     public String list(Model model, @RequestParam(defaultValue = "num") String sort) {
+        System.out.println("/score/list : GET");
+
+        //0421 추가 scoreList에서 원하는 정보만 추출하고 이름을 마스킹해서
+        //다시 DTO리스트로 변환해야 한다.
+        //클라이언트에서 원하는 정보만 주기위해서
         List<Score> slist = repository.findAll(sort);
 
-        model.addAttribute("sList", slist);
-        System.out.println("/score/list : GET");
+        List<ScoreListResponseDTO> responstDtoList = slist.stream()
+                .map(ScoreListResponseDTO::new)
+                //.map(s -> new ScoreListResponseDTO(s))
+                .collect(Collectors.toList());
+
+
+        model.addAttribute("sList", responstDtoList);
         return "chap04/score-list";
     }
 
@@ -96,7 +109,7 @@ public class ScoreController {
     }
 
     @GetMapping("/detail")
-    public String detail(int stuNum, Model model) {
+    public String detail(@RequestParam(required = true) int stuNum, Model model) {
         retrieve(stuNum, model);
         model.addAttribute("stuNum", stuNum);
         return "/chap04/score-detail";
@@ -105,11 +118,11 @@ public class ScoreController {
     @GetMapping("/change")
     public String change(int stuNum, Model model) {
         retrieve(stuNum, model);
-
         return "/chap04/score-change";
     }
 
 
+    //원래는 dto에 name값이 없기 때문에 새로운 dto를 만들어 작업해야 한다.
     @PostMapping("/endchange")
     public String endChange(ScoreRequestDTO dto, int stuNum) {
         Score score = repository.findByStuNum(stuNum);
