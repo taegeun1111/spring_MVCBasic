@@ -1,0 +1,30 @@
+#detail-section{
+    margin: 0 auto;
+    margin-top: 200px;
+    box-shadow: 0 15px 0 #999;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+    height: 300px;
+    border-radius: 10px;
+    background: rgb(230, 230, 230);
+    /* background: #000; */
+}
+
+/* .detail-sub{
+    margin-top: 30px;
+    border: none;
+
+    
+} */
+
+.detail-sub a{
+    text-decoration: none;
+    color: black;
+    background: rgb(199, 199, 199);
+    padding: 3px 10px;
+    border-radius: 5px;
+}
+
