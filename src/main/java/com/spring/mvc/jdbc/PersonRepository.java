@@ -126,7 +126,7 @@ public class PersonRepository {
             conn.setAutoCommit(false); //오토커밋 비활성화
 
             //SQL을 실행할 수 있는 객체 얻기
-            String sql = "DELETE FORM person WHERE id=?";
+            String sql = "DELETE FROM person WHERE id=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             //?값 세팅하기
