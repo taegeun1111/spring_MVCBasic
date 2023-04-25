@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -18,7 +21,7 @@ class PersonRepositoryTest {
     void saveTest(){
         //given
         Person p = new Person();
-        p.setPersonName("뽀리리");
+        p.setPersonName("수길이");
         p.setPersonAge(60);
 
         //when
@@ -49,4 +52,17 @@ class PersonRepositoryTest {
         //then
     }
 
+    @Test
+    void findAllTest(){
+        List<Person> people = repository.findAll();
+        for (Person person : people) {
+            System.out.println("person = " + person);
+        }
+    }
+
+    @Test
+    void findOneTest(){
+        Person p = repository.findOne(4L);
+        System.out.println("p = " + p);
+    }
 }

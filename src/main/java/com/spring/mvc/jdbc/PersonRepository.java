@@ -2,10 +2,9 @@ package com.spring.mvc.jdbc;
 
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class PersonRepository {
@@ -163,5 +162,65 @@ public class PersonRepository {
 
     }
 
+
+    //사람 정보 전체 조회
+    public List<Person> findAll() {
+        List<Person> people = new ArrayList<>();
+
+        //try-with-resource : close 자동화 (AutoClosable)
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+
+            conn.setAutoCommit(false);
+            String sql = "SELECT * FROM person";
+            PreparedStatement pstmt = conn.prepareStatement(sql); //SELECT결과를 받음
+
+            ResultSet rs = pstmt.executeQuery();
+            //포인터 커서로 첫번째 행부터 next호출시마다 매 다음 행을 지목
+            while (rs.next()) {
+                //위치한 커서에서 데이터를 추출
+                long id = rs.getLong("id");
+                String name = rs.getString("person_name");
+                int age = rs.getInt("person_age");
+
+                Person p = new Person(id, name, age);
+                people.add(p);
+            }
+
+        } catch (Exception e) {
+
+        }
+
+
+        return people;
+    }
+
+    //개별 조회
+    public Person findOne(long id) {
+        List<Person> people = new ArrayList<>();
+
+        //try-with-resource : close 자동화 (AutoClosable)
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+
+            conn.setAutoCommit(false);
+            String sql = "SELECT * FROM person WHERE id=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql); //SELECT결과를 받음
+            pstmt.setLong(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            //포인터 커서로 첫번째 행부터 next호출시마다 매 다음 행을 지목
+            if (rs.next()) {
+                //위치한 커서에서 데이터를 추출
+                long idt = rs.getLong("id");
+                String name = rs.getString("person_name");
+                int age = rs.getInt("person_age");
+
+                Person p = new Person(idt, name, age);
+                return p;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
