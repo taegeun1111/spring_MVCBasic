@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 //entity 이름 + Response(or Request) + DTO
 @RequiredArgsConstructor //final만 골라서 초기화
 @Getter //final이기 때문에 setter 없음
@@ -25,6 +27,7 @@ public class ScoreListResponseDTO {
         this.average = s.getAverage();
         this.grade = s.getGrade();
     }
+
 
     private String makeMaskingName(String originalName){
         String makingName = String.valueOf(originalName.charAt(0));
