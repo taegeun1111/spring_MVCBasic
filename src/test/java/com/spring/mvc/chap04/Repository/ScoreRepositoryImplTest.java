@@ -1,6 +1,9 @@
 package com.spring.mvc.chap04.Repository;
 
-import com.spring.mvc.chap04.entity.Score;
+
+import com.spring.mvc.chap4DB.Repository.ScoreRepository;
+import com.spring.mvc.chap4DB.Repository.ScoreRepositoryImpl;
+import com.spring.mvc.chap4DB.entity.Score;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
