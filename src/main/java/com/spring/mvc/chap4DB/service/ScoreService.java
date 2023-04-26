@@ -1,10 +1,11 @@
-package com.spring.mvc.chap04.service;
+package com.spring.mvc.chap4DB.service;
 
-import com.spring.mvc.chap04.Repository.ScoreRepository;
-import com.spring.mvc.chap04.controller.dto.ScoreListResponseDTO;
-import com.spring.mvc.chap04.controller.dto.ScoreRequestDTO;
-import com.spring.mvc.chap04.entity.Score;
-import lombok.RequiredArgsConstructor;
+import com.spring.mvc.chap4DB.Repository.ScoreRepository;
+import com.spring.mvc.chap4DB.controller.dto.ScoreListResponseDTO;
+import com.spring.mvc.chap4DB.controller.dto.ScoreRequestDTO;
+import com.spring.mvc.chap4DB.entity.Score;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +16,15 @@ import java.util.stream.Collectors;
  * ex) 트랜잭션 처리, 예외처리, dto변환처리
  */
 @Service
-@RequiredArgsConstructor
 public class ScoreService {
 
     private final ScoreRepository scoreRepository;
+
+    @Autowired
+    public ScoreService(@Qualifier("jdbc") ScoreRepository scoreRepository) {
+        this.scoreRepository = scoreRepository;
+    }
+
     //목록조회 중간처리
     /*
         컨트롤러는 데이터베이스를 통해
@@ -37,7 +43,7 @@ public class ScoreService {
                 .map(ScoreListResponseDTO::new)
                 //.map(s -> new ScoreListResponseDTO(s))
                 .collect(Collectors.toList());
-
+//
         return responstDtoList;
     }
 

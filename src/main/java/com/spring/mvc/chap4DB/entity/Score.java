@@ -1,9 +1,13 @@
-package com.spring.mvc.chap04.entity;
+package com.spring.mvc.chap4DB.entity;
 
-import com.spring.mvc.chap04.controller.dto.ScoreRequestDTO;
+import com.spring.mvc.chap4DB.controller.dto.ScoreRequestDTO;
 import lombok.*;
 
-import static com.spring.mvc.chap04.entity.Grade.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import static com.spring.mvc.chap4DB.entity.Grade.*;
+
 
 @Setter
 @Getter
@@ -30,6 +34,17 @@ public class Score {
         this.math = dto.getMath();
         calcTotalAngAvg(); //총점, 평균, 계산
         calcGrade();
+    }
+
+    public Score(ResultSet rs) throws SQLException {
+        this.stuNum = rs.getInt("stu_num");
+        this.name = rs.getString("name");
+        this.kor = rs.getInt("kor");
+        this.eng = rs.getInt("eng");
+        this.math = rs.getInt("math");
+        this.total = rs.getInt("total");
+        this.average = rs.getDouble("average");
+        this.grade = Grade.valueOf(rs.getString("grade"));
     }
 
     public void calcGrade() {

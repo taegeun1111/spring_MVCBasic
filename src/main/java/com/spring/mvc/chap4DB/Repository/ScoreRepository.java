@@ -1,9 +1,8 @@
-package com.spring.mvc.chap04.Repository;
+package com.spring.mvc.chap4DB.Repository;
 
-import com.spring.mvc.chap04.entity.Score;
+import com.spring.mvc.chap4DB.entity.Score;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * 역할 명세(추상화) :

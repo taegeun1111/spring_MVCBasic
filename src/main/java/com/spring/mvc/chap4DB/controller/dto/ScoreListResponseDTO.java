@@ -1,13 +1,11 @@
-package com.spring.mvc.chap04.controller.dto;
+package com.spring.mvc.chap4DB.controller.dto;
 
-import com.spring.mvc.chap04.entity.Grade;
-import com.spring.mvc.chap04.entity.Score;
+import com.spring.mvc.chap4DB.entity.Grade;
+import com.spring.mvc.chap4DB.entity.Score;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 //entity 이름 + Response(or Request) + DTO
 @RequiredArgsConstructor //final만 골라서 초기화

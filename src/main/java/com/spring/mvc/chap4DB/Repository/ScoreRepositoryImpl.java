@@ -1,16 +1,19 @@
-package com.spring.mvc.chap04.Repository;
+package com.spring.mvc.chap4DB.Repository;
 
-import com.spring.mvc.chap04.controller.dto.ScoreRequestDTO;
-import com.spring.mvc.chap04.entity.Score;
+import com.spring.mvc.chap4DB.controller.dto.ScoreRequestDTO;
+import com.spring.mvc.chap4DB.entity.Score;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 
-@Repository //빈 등록 : 객체 생성 제어권을 스프링에게 위임(Component와 동일 명시적으로 하기 위해 사용)
+
+@Repository("memory") //빈 등록 : 객체 생성 제어권을 스프링에게 위임(Component와 동일 명시적으로 하기 위해 사용)
 public class ScoreRepositoryImpl implements ScoreRepository {
 
     /**

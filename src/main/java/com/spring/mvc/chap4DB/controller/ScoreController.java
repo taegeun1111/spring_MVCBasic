@@ -1,11 +1,10 @@
-package com.spring.mvc.chap04.controller;
+package com.spring.mvc.chap4DB.controller;
 
 
-import com.spring.mvc.chap04.Repository.ScoreRepositoryImpl;
-import com.spring.mvc.chap04.controller.dto.ScoreListResponseDTO;
-import com.spring.mvc.chap04.controller.dto.ScoreRequestDTO;
-import com.spring.mvc.chap04.entity.Score;
-import com.spring.mvc.chap04.service.ScoreService;
+import com.spring.mvc.chap4DB.controller.dto.ScoreListResponseDTO;
+import com.spring.mvc.chap4DB.controller.dto.ScoreRequestDTO;
+import com.spring.mvc.chap4DB.entity.Score;
+import com.spring.mvc.chap4DB.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 /**
