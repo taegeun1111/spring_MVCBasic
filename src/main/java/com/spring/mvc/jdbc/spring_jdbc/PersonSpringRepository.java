@@ -48,11 +48,10 @@ public class PersonSpringRepository {
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Person(rs));
     }
 
-    public Person findOne(long id){
+    public Person findOne(long id) {
         String sql = "SELECT * FROM person WHERE id=?";
-        return jdbcTemplate.queryForObject(sql,(rs, rowNum) -> new Person(rs),id);
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> new Person(rs), id);
 
 
     }
-
 }
