@@ -1,6 +1,6 @@
 package com.spring.mvc.chap05.repository;
 
-import com.spring.mvc.chap05.dto.Page;
+import com.spring.mvc.chap05.dto.Page.Page;
 import com.spring.mvc.chap05.entity.Board;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,4 +21,6 @@ public interface BoardMapper {
     //조회수 상승
     void upViewCount(int boardNo);
 
+    //전체 페이지
+    int count();
 }

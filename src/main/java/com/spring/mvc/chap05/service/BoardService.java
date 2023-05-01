@@ -2,10 +2,9 @@ package com.spring.mvc.chap05.service;
 
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardSaveRequestDTO;
-import com.spring.mvc.chap05.dto.Page;
+import com.spring.mvc.chap05.dto.Page.Page;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.repository.BoardMapper;
-import com.spring.mvc.chap05.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,5 +39,9 @@ public class BoardService {
 
     public boolean deleteNum(int boardNo){
         return boardRepository.deleteByNo(boardNo);
+    }
+
+    public int getCount() {
+        return boardRepository.count();
     }
 }
