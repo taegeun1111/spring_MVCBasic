@@ -57,7 +57,7 @@
                             <a href="/board/delete?boardNo=${b.boardNo}">
                                 <input type="hidden" name="boardNo" value="${b.boardNo}">
                                 <div class="card-btn-group">
-                                    <button class="del-btn" data-href="/board/delete?bno=${b.boardNo}">
+                                    <button class="del-btn" data-href="/board/delete?boardNo=${b.boardNo}">
                                         <i class="fas fa-times"></i>
                                     </button>
                                 </div>
@@ -111,7 +111,7 @@
                         // section태그에 붙은 글번호 읽기
                         const bno = e.target.closest('section.card').dataset.bno;
                         // 요청 보내기
-                        window.location.href = '/board/detail?bno=' + bno;
+                        // window.location.href = '/board/detail?bno=' + bno;
                     }
                 });
                 // 전역 이벤트로 모달창 닫기
