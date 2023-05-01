@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Builder
 public class Board {
     private int boardNo;  //게시글 번호
     private String title;  //제목

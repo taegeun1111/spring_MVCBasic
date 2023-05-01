@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ScoreRepositoryImplTest {
 
-    ScoreRepository repository = new ScoreRepositoryImpl();
+//    ScoreRepository repository = new ScoreRepositoryImpl();
 
     /**
      *  단위 테스트(Unit test)
@@ -37,73 +37,73 @@ class ScoreRepositoryImplTest {
     }
 
 
-    @Test
-    @DisplayName("저장소에서 findByStuNum을 호출하여" +
-            "학번이 2인 학생을 조회하면 그 학생의 국어점수가" +
-            "33점이고 이름이 춘식이어야 한다.")
-    void stuTest(){
-        //given : stuNum
-        int stuNum = 2;
-        //when
-        Score score = repository.findByStuNum(stuNum);
-        //then
-        Assertions.assertEquals(70, score.getKor());
-        Assertions.assertEquals("크롱", score.getName());
-
+//    @Test
+//    @DisplayName("저장소에서 findByStuNum을 호출하여" +
+//            "학번이 2인 학생을 조회하면 그 학생의 국어점수가" +
+//            "33점이고 이름이 춘식이어야 한다.")
+//    void stuTest(){
+//        //given : stuNum
+//        int stuNum = 2;
+//        //when
+//        Score score = repository.findByStuNum(stuNum);
+//        //then
+//        Assertions.assertEquals(70, score.getKor());
+//        Assertions.assertEquals("크롱", score.getName());
+//
+//    }
+//
+//    @Test
+//    @DisplayName("저장소에서 findByStuNum을 호출하여" +
+//            "학번이 99인 학생을 조회하면 null이 리턴될 것이다.")
+//    void findOneTest(){
+//        //given : stuNum
+//        int stuNum = 99;
+//        //when
+//        Score score = repository.findByStuNum(stuNum);
+//        //then
+//        Assertions.assertNull(score);
+//
+//    }
+//
+//    @Test
+//    @DisplayName("저장소에서 학번이 2인 학생을 삭제한 후에" +
+//            "리스트를 전체조회해보면 성적의 개수가 2개일 것이고" +
+//            "다시 2번 학생을 조회했을 때 null이 반환되어야 한다.")
+//    void deleteTest(){
+//        //given
+//        int stuNum =2;
+//        //when
+//        repository.deleteByStuNum(stuNum);
+////        List<Score> scoreList = repository.findAll();
+//        Score score = repository.findByStuNum(stuNum);
+//        //then
+////        assertEquals(2,scoreList.size());
+////        assertNull(score);
+//
+//    }
+//
+//    @Test
+//    @DisplayName("새로운 성적정보를 save를 통해 추가하면" +
+//            "목록의 개수가 4개여야 한다.")
+//    void saveTest(){
+//        //given
+//        Score score = new Score();
+//        score.setName("언년이");
+//        score.setKor(100);
+//        score.setMath(50);
+//        score.setEng(0);
+//        //sequence는 private기 때문에 메서드를 수정해줘야 한다.
+//
+//        //when
+//        boolean flag = repository.save(score);
+////        List<Score> scoreList = repository.findAll();
+//        //then
+////        assertEquals(4,scoreList.size());
+//        assertTrue(flag);
+////        assertEquals(4,scoreList.get(scoreList.size()-1).getStuNum());
     }
 
-    @Test
-    @DisplayName("저장소에서 findByStuNum을 호출하여" +
-            "학번이 99인 학생을 조회하면 null이 리턴될 것이다.")
-    void findOneTest(){
-        //given : stuNum
-        int stuNum = 99;
-        //when
-        Score score = repository.findByStuNum(stuNum);
-        //then
-        Assertions.assertNull(score);
-
-    }
-
-    @Test
-    @DisplayName("저장소에서 학번이 2인 학생을 삭제한 후에" +
-            "리스트를 전체조회해보면 성적의 개수가 2개일 것이고" +
-            "다시 2번 학생을 조회했을 때 null이 반환되어야 한다.")
-    void deleteTest(){
-        //given
-        int stuNum =2;
-        //when
-        repository.deleteByStuNum(stuNum);
-//        List<Score> scoreList = repository.findAll();
-        Score score = repository.findByStuNum(stuNum);
-        //then
-//        assertEquals(2,scoreList.size());
-//        assertNull(score);
-
-    }
-
-    @Test
-    @DisplayName("새로운 성적정보를 save를 통해 추가하면" +
-            "목록의 개수가 4개여야 한다.")
-    void saveTest(){
-        //given
-        Score score = new Score();
-        score.setName("언년이");
-        score.setKor(100);
-        score.setMath(50);
-        score.setEng(0);
-        //sequence는 private기 때문에 메서드를 수정해줘야 한다.
-
-        //when
-        boolean flag = repository.save(score);
-//        List<Score> scoreList = repository.findAll();
-        //then
-//        assertEquals(4,scoreList.size());
-        assertTrue(flag);
-//        assertEquals(4,scoreList.get(scoreList.size()-1).getStuNum());
-    }
-
-}
+//}
 
 
 

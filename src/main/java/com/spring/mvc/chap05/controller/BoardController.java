@@ -2,9 +2,11 @@ package com.spring.mvc.chap05.controller;
 
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardSaveRequestDTO;
+import com.spring.mvc.chap05.dto.Page;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,16 +18,20 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
     private final BoardService boardService;
 
     //목록조회 기능
     @GetMapping("/list")
-    public String list(Model model){
-        List<BoardListResponseDTO> list = boardService.getList();
+    public String list(Page page,Model model){
+        log.info("/board/list : GET");
+        log.info("page : {}", page);
+        List<BoardListResponseDTO> list = boardService.getList(page);
         model.addAttribute("blist",list);
         return "chap05/list";
     }
+
 
     @GetMapping("/detail")
     public String detail(int boardNo, Model model){
