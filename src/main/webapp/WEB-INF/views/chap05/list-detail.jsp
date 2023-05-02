@@ -16,7 +16,7 @@
                     <div>내용 : ${one.content}</div>
                 </div>
                 <div class="detail-sub">
-                    <a href="/board/list">이전으로</a>
+                    <a href="/board/list?pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}">이전으로</a>
                 </div>
             </section>
         </body>

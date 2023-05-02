@@ -3,6 +3,7 @@ package com.spring.mvc.chap05.service;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardSaveRequestDTO;
 import com.spring.mvc.chap05.dto.Page.Page;
+import com.spring.mvc.chap05.dto.Page.Search;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.repository.BoardMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class BoardService {
     //중간처리 기능 자유롭게 사용
 
     //전체 중 게시글 번호를 제외한 값들 반환
-    public List<BoardListResponseDTO> getList(Page page) {
+    public List<BoardListResponseDTO> getList(Search page) {
         List<Board> allBoardList = boardRepository.findAll(page);
         return allBoardList.stream()
                 .map(BoardListResponseDTO::new)
@@ -41,7 +42,7 @@ public class BoardService {
         return boardRepository.deleteByNo(boardNo);
     }
 
-    public int getCount() {
-        return boardRepository.count();
+    public int getCount(Search search) {
+        return boardRepository.count(search);
     }
 }

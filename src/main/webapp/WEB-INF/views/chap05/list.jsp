@@ -34,10 +34,32 @@
             <button class="add-btn">새 글 쓰기</button>
         </div>
 
+        <div class="top-section">
+            <!-- 검색창 영역 -->
+            <div class="search">
+                <form action="/board/list" method="get">
+
+                    <select class="form-select" name="type" id="search-type">
+                        <option value="title">제목</option>
+                        <option value="content">내용</option>
+                        <option value="writer" >작성자</option>
+                        <option value="tc">제목+내용</option>
+                    </select>
+
+                    <input type="text" class="form-control" name="keyword" value="${s.keyword}">
+
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
         <!-- <form action="/board/detail" method="get"> -->
         <div class="card-container">
             <c:forEach var="b" items="${blist}">
-                <div class="card-wrapper" onClick="location.href='/board/detail?boardNo=${b.boardNo}'">
+                <div class="card-wrapper" onClick="location.href='/board/detail?pageNo=${s.pageNo}&boardNo=${b.boardNo}&type=${s.type}&keyword=${s.keyword}'">
                     <input type="hidden" name="boardNo" value="${b.boardNo}">
                     <section class="card">
                         <div class="card-title-wrapper">
@@ -75,35 +97,38 @@
         <!-- 게시글 목록 하단 영역 -->
         <div class="bottom-section">
 
-           <!-- 페이지 버튼 영역 -->
-           <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-lg pagination-custom">
+            <!-- 페이지 버튼 영역 -->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-lg pagination-custom">
 
-                
-                <c:if test="${maker.page.pageNo != 1}">
-                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=1">&lt;&lt;</a></li>
-                </c:if>
 
-                <c:if test="${maker.prev}">
-                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.begin - 1}">prev</a></li>
-                </c:if>
+                    <c:if test="${maker.page.pageNo != 1}">
+                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=1&type=${s.type}&keyword=${s.keyword}">&lt;&lt;</a></li>
+                    </c:if>
 
-                <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
-                    <li data-page-num="${i}" class="page-item">
-                        <a class="page-link" href="/board/list?pageNo=${i}">${i}</a>
-                    </li>
-                </c:forEach>
-                
-                
-                <c:if test="${maker.next}">
-                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.end + 1}">next</a></li>
-                </c:if>
+                    <c:if test="${maker.prev}">
+                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}">prev</a>
+                        </li>
+                    </c:if>
 
-                <c:if test="${maker.page.pageNo != maker.finalPage}">
-                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.finalPage}">&gt;&gt;</a></li>
-                </c:if>
-            </ul>
-        </nav>
+                    <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
+                        <li data-page-num="${i}" class="page-item">
+                            <a class="page-link" href="/board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}">${i}</a>
+                        </li>
+                    </c:forEach>
+
+
+                    <c:if test="${maker.next}">
+                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}">next</a>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${maker.page.pageNo != maker.finalPage}">
+                        <li class="page-item"><a class="page-link"
+                                href="/board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}">&gt;&gt;</a></li>
+                    </c:if>
+                </ul>
+            </nav>
 
         </div>
 
@@ -163,28 +188,28 @@
         function removeDown(e) {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card-wrapper');
-            $targetCard ? .removeAttribute('id', 'card-down');
+            $targetCard ?.removeAttribute('id', 'card-down');
         }
 
         function removeHover(e) {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card');
-            $targetCard ? .classList.remove('card-hover');
-            const $delBtn = e.target.closest('.card-wrapper') ? .querySelector('.del-btn');
+            $targetCard ?.classList.remove('card-hover');
+            const $delBtn = e.target.closest('.card-wrapper') ?.querySelector('.del-btn');
             $delBtn.style.opacity = '0';
         }
 
         $cardContainer.onmouseover = e => {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card');
-            $targetCard ? .classList.add('card-hover');
-            const $delBtn = e.target.closest('.card-wrapper') ? .querySelector('.del-btn');
+            $targetCard ?.classList.add('card-hover');
+            const $delBtn = e.target.closest('.card-wrapper') ?.querySelector('.del-btn');
             $delBtn.style.opacity = '1';
         }
         $cardContainer.onmousedown = e => {
             if (e.target.matches('.card-container .card-btn-group *')) return;
             const $targetCard = e.target.closest('.card-wrapper');
-            $targetCard ? .setAttribute('id', 'card-down');
+            $targetCard ?.setAttribute('id', 'card-down');
         };
         $cardContainer.onmouseup = removeDown;
         $cardContainer.addEventListener('mouseout', removeDown);
@@ -214,8 +239,21 @@
             }
 
         }
+        // 셀렉트옵션 검색타입 태그 고정
+        function fixSearchOption() {
+            const $select = document.getElementById('search-type');
+
+            for (let $opt of [...$select.children]) {
+                if ($opt.value === '${s.type}') {
+                    $opt.setAttribute('selected', 'selected');
+                    break;
+                }
+            }
+        }
+
 
         appendPageActive();
+        fixSearchOption();
     </script>
 
 </body>

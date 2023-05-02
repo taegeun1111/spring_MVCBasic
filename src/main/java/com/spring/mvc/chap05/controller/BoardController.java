@@ -5,6 +5,7 @@ import com.spring.mvc.chap05.dto.BoardSaveRequestDTO;
 import com.spring.mvc.chap05.dto.Page.Page;
 
 import com.spring.mvc.chap05.dto.Page.PageMaker;
+import com.spring.mvc.chap05.dto.Page.Search;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,25 +28,27 @@ public class BoardController {
 
     //목록조회 기능
     @GetMapping("/list")
-    public String list(Page page,Model model){
+    public String list(Search page, Model model){
         log.info("/board/list : GET");
         log.info("page : {}", page);
         //페이징 알고리즘 작동
-        PageMaker maker = new PageMaker(page, boardService.getCount());
+        PageMaker maker = new PageMaker(page, boardService.getCount(page));
         log.info("page maker: {}", maker);
         List<BoardListResponseDTO> list = boardService.getList(page);
         model.addAttribute("blist",list);
         model.addAttribute("maker",maker);
+        model.addAttribute("s",page);
 
         return "chap05/list";
     }
 
 
     @GetMapping("/detail")
-    public String detail(int boardNo, Model model){
+    public String detail(int boardNo, Model model, @ModelAttribute("s") Search page){
         System.out.println("get발생!");
         Board oneList = boardService.getOneList(boardNo);
         model.addAttribute("one",oneList);
+//        model.addAttribute("s",page);
         return "chap05/list-detail";
     }
 
