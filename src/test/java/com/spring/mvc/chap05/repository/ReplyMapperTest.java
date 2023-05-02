@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,8 +43,41 @@ class ReplyMapperTest {
             replyMapper.save(r);
         }
 
+    }
 
+    @Test
+    @DisplayName("댓글을 3번 게시물에 등록하면 3번 게시물의 총 댓글 수는 4개여야 한다.")
+    @Transactional //테스트 끝난 이후 롤백해라
+    void saveTest() {
+        //given
+        long boardNo =3;
+        Reply newReply = Reply.builder()
+                .replyText("세이브2")
+                .replyWriter("홍길동")
+                .boardNo(boardNo)
+                .build();
+        //when
+        boolean flag = replyMapper.save(newReply);
 
+        //then
+        assertTrue(flag);
+        assertEquals(5, replyMapper.count(boardNo));
+    }
+
+    @Test
+    @DisplayName("댓글번호가 1001번인 댓글을 삭제하면" +
+            "3번 게시물의 총 댓글 수가 3이어야 한다.")
+    @Transactional
+    void deleteTest(){
+        //given
+        long replyNo =1001L;
+        long boardNo = 3L;
+        //when
+        boolean flag = replyMapper.deleteOne(replyNo);
+
+        //then
+        assertTrue(flag);
+        assertEquals(3,replyMapper.count(boardNo));
     }
 
 }
