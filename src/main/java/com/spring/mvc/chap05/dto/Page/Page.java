@@ -1,6 +1,7 @@
 package com.spring.mvc.chap05.dto.Page;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

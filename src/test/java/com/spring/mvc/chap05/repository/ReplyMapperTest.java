@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.repository;
 
+import com.spring.mvc.chap05.dto.Page.Page;
 import com.spring.mvc.chap05.dto.Page.Search;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.entity.Reply;
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +26,7 @@ class ReplyMapperTest {
     @DisplayName("게시물 300개를 등록하고 " +
             "각 게시물에 랜덤으로 1000개의 " +
             "댓글을 나눠서 등록해야 한다.")
+    @Transactional
     void bulkInsertTest() {
 
         for (int i = 1; i <= 300; i++) {
@@ -79,5 +83,40 @@ class ReplyMapperTest {
         assertTrue(flag);
         assertEquals(3,replyMapper.count(boardNo));
     }
+
+    @Test
+    @DisplayName("댓글번호가 1001번인 댓글을 수정하면" +
+            "해당 replyNo의 reply_text와 같아야 한다.")
+    @Transactional
+    void modifyTest(){
+        //given
+        String newText = "대한민국 만세";
+        Reply build = Reply.builder()
+                .replyNo(1000L)
+                .replyText(newText)
+                .boardNo(3L)
+                .build();
+        //when
+        boolean modify = replyMapper.modify(build);
+
+        //then
+        assertTrue(modify);
+        assertEquals(newText,replyMapper.findOne(build.getReplyNo()).getReplyText());
+//        assertEquals(4, replyMapper.count(build.getBoardNo()));
+
+    }
+
+    @Test
+    @DisplayName("전체 조회 시 답글의 개수는 1002개가 나와야 한다.")
+    void findAllTest(){
+        //given
+        Page page = new Page();
+        long boardNo = 1L;
+
+        //when
+
+
+    }
+
 
 }
