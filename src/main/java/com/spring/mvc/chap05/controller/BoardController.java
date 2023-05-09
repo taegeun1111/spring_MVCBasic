@@ -48,6 +48,7 @@ public class BoardController {
         System.out.println("get발생!");
         Board oneList = boardService.getOneList(boardNo);
         model.addAttribute("one",oneList);
+        model.addAttribute("boardNo",boardNo);
 //        model.addAttribute("s",page);
         return "chap05/list-detail";
     }

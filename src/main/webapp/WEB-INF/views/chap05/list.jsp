@@ -1,31 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
-
-    <!-- reset -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
-
-    <!-- fontawesome css: https://fontawesome.com -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
-
-    <!-- bootstrap css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/list2.css">
-
+    <%@ include file="../include/static-head.jsp" %>
 </head>
 
 <body>
+    <%@ include file="../include/header.jsp"%>
 
     <div id="wrap">
 
@@ -42,7 +26,7 @@
                     <select class="form-select" name="type" id="search-type">
                         <option value="title">제목</option>
                         <option value="content">내용</option>
-                        <option value="writer" >작성자</option>
+                        <option value="writer">작성자</option>
                         <option value="tc">제목+내용</option>
                     </select>
 
@@ -59,7 +43,8 @@
         <!-- <form action="/board/detail" method="get"> -->
         <div class="card-container">
             <c:forEach var="b" items="${blist}">
-                <div class="card-wrapper" onClick="location.href='/board/detail?pageNo=${s.pageNo}&boardNo=${b.boardNo}&type=${s.type}&keyword=${s.keyword}'">
+                <div class="card-wrapper"
+                    onClick="location.href='/board/detail?pageNo=${s.pageNo}&boardNo=${b.boardNo}&type=${s.type}&keyword=${s.keyword}'">
                     <input type="hidden" name="boardNo" value="${b.boardNo}">
                     <section class="card">
                         <div class="card-title-wrapper">
@@ -103,29 +88,34 @@
 
 
                     <c:if test="${maker.page.pageNo != 1}">
-                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=1&type=${s.type}&keyword=${s.keyword}">&lt;&lt;</a></li>
+                        <li class="page-item"><a class="page-link"
+                                href="/board/list?pageNo=1&type=${s.type}&keyword=${s.keyword}">&lt;&lt;</a></li>
                     </c:if>
 
                     <c:if test="${maker.prev}">
-                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}">prev</a>
+                        <li class="page-item"><a class="page-link"
+                                href="/board/list?pageNo=${maker.begin - 1}&type=${s.type}&keyword=${s.keyword}">prev</a>
                         </li>
                     </c:if>
 
                     <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
                         <li data-page-num="${i}" class="page-item">
-                            <a class="page-link" href="/board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}">${i}</a>
+                            <a class="page-link"
+                                href="/board/list?pageNo=${i}&type=${s.type}&keyword=${s.keyword}">${i}</a>
                         </li>
                     </c:forEach>
 
 
                     <c:if test="${maker.next}">
-                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}">next</a>
+                        <li class="page-item"><a class="page-link"
+                                href="/board/list?pageNo=${maker.end + 1}&type=${s.type}&keyword=${s.keyword}">next</a>
                         </li>
                     </c:if>
 
                     <c:if test="${maker.page.pageNo != maker.finalPage}">
                         <li class="page-item"><a class="page-link"
-                                href="/board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}">&gt;&gt;</a></li>
+                                href="/board/list?pageNo=${maker.finalPage}&type=${s.type}&keyword=${s.keyword}">&gt;&gt;</a>
+                        </li>
                     </c:if>
                 </ul>
             </nav>
@@ -188,28 +178,28 @@
         function removeDown(e) {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card-wrapper');
-            $targetCard ?.removeAttribute('id', 'card-down');
+            $targetCard ? .removeAttribute('id', 'card-down');
         }
 
         function removeHover(e) {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card');
-            $targetCard ?.classList.remove('card-hover');
-            const $delBtn = e.target.closest('.card-wrapper') ?.querySelector('.del-btn');
+            $targetCard ? .classList.remove('card-hover');
+            const $delBtn = e.target.closest('.card-wrapper') ? .querySelector('.del-btn');
             $delBtn.style.opacity = '0';
         }
 
         $cardContainer.onmouseover = e => {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card');
-            $targetCard ?.classList.add('card-hover');
-            const $delBtn = e.target.closest('.card-wrapper') ?.querySelector('.del-btn');
+            $targetCard ? .classList.add('card-hover');
+            const $delBtn = e.target.closest('.card-wrapper') ? .querySelector('.del-btn');
             $delBtn.style.opacity = '1';
         }
         $cardContainer.onmousedown = e => {
             if (e.target.matches('.card-container .card-btn-group *')) return;
             const $targetCard = e.target.closest('.card-wrapper');
-            $targetCard ?.setAttribute('id', 'card-down');
+            $targetCard ? .setAttribute('id', 'card-down');
         };
         $cardContainer.onmouseup = removeDown;
         $cardContainer.addEventListener('mouseout', removeDown);

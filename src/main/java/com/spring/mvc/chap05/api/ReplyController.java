@@ -27,7 +27,6 @@ import static org.springframework.http.ResponseEntity.*;
 public class ReplyController {
 
     private final ReplyService replyService;
-    private final ReplyMapper replyMapper;
 
     // 댓글 목록 조회 요청
     // URL : /api/v1/replies/3/page/1
