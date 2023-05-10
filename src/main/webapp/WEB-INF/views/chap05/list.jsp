@@ -178,28 +178,28 @@
         function removeDown(e) {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card-wrapper');
-            $targetCard ? .removeAttribute('id', 'card-down');
+            $targetCard?.removeAttribute('id', 'card-down');
         }
 
         function removeHover(e) {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card');
-            $targetCard ? .classList.remove('card-hover');
-            const $delBtn = e.target.closest('.card-wrapper') ? .querySelector('.del-btn');
+            $targetCard?.classList.remove('card-hover');
+            const $delBtn = e.target.closest('.card-wrapper')?.querySelector('.del-btn');
             $delBtn.style.opacity = '0';
         }
 
         $cardContainer.onmouseover = e => {
             if (!e.target.matches('.card-container *')) return;
             const $targetCard = e.target.closest('.card');
-            $targetCard ? .classList.add('card-hover');
-            const $delBtn = e.target.closest('.card-wrapper') ? .querySelector('.del-btn');
+            $targetCard?.classList.add('card-hover');
+            const $delBtn = e.target.closest('.card-wrapper')?.querySelector('.del-btn');
             $delBtn.style.opacity = '1';
         }
         $cardContainer.onmousedown = e => {
             if (e.target.matches('.card-container .card-btn-group *')) return;
             const $targetCard = e.target.closest('.card-wrapper');
-            $targetCard ? .setAttribute('id', 'card-down');
+            $targetCard?.setAttribute('id', 'card-down');
         };
         $cardContainer.onmouseup = removeDown;
         $cardContainer.addEventListener('mouseout', removeDown);

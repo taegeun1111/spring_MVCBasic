@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- header -->
+<style>
+    .container.wrap{
+        margin-top: 200px;
+    }
+</style>
 <header>
     <div class="inner-header">
         <h1 class="logo">
@@ -25,7 +30,7 @@
             <li><a href="#">About</a></li>
             <li><a href="/board/list">Board</a></li>
             <li><a href="#">Contact</a></li>
-            <li><a href="#">Sign Up</a></li>
+            <li><a href="/members/sign-up">Sign Up</a></li>
             <li><a href="#">Sign In</a></li>
             
         </ul>
