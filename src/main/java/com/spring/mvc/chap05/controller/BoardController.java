@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -28,27 +30,43 @@ public class BoardController {
 
     //목록조회 기능
     @GetMapping("/list")
-    public String list(Search page, Model model){
+    public String list(Search page,
+                       Model model,
+                       HttpServletRequest request
+    ) {
+        boolean flag = false;
+
+        Cookie[] cookies = request.getCookies();
+        for (Cookie c : cookies) {
+            if (c.getName().equals("login")){
+                flag = true;
+                break;
+            }
+        }
+
+        if(!flag) return "redirect:/members/sign-in";
+
+
         log.info("/board/list : GET");
         log.info("page : {}", page);
         //페이징 알고리즘 작동
         PageMaker maker = new PageMaker(page, boardService.getCount(page));
         log.info("page maker: {}", maker);
         List<BoardListResponseDTO> list = boardService.getList(page);
-        model.addAttribute("blist",list);
-        model.addAttribute("maker",maker);
-        model.addAttribute("s",page);
+        model.addAttribute("blist", list);
+        model.addAttribute("maker", maker);
+        model.addAttribute("s", page);
 
         return "chap05/list";
     }
 
 
     @GetMapping("/detail")
-    public String detail(int boardNo, Model model, @ModelAttribute("s") Search page){
+    public String detail(int boardNo, Model model, @ModelAttribute("s") Search page) {
         System.out.println("get발생!");
         Board oneList = boardService.getOneList(boardNo);
-        model.addAttribute("one",oneList);
-        model.addAttribute("boardNo",boardNo);
+        model.addAttribute("one", oneList);
+        model.addAttribute("boardNo", boardNo);
 //        model.addAttribute("s",page);
         return "chap05/list-detail";
     }
@@ -84,7 +102,7 @@ public class BoardController {
     }
 
     @GetMapping("/delete")
-    public String delete(int boardNo){
+    public String delete(int boardNo) {
         System.out.println("/board.delete : GET");
         boardService.deleteNum(boardNo);
         return "redirect:/board/list";
