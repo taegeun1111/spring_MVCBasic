@@ -35,7 +35,9 @@ public class BoardService {
     }
 
     public boolean register(BoardSaveRequestDTO dto) {
-        return boardRepository.save(new Board(dto));
+        Board board = new Board(dto);
+        board.setAccount("현재 로그인한 계정");
+        return boardRepository.save(board);
     }
 
     public boolean deleteNum(int boardNo){

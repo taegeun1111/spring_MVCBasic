@@ -6,6 +6,8 @@ import com.spring.mvc.chap05.dto.SignUpRequestDTO;
 import com.spring.mvc.chap05.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import static com.spring.mvc.chap05.dto.LoginResult.*;
 
@@ -62,20 +66,34 @@ public class MemberController {
 
     //로그인 화면 요청
     @GetMapping("/sign-in")
-    public String siginIn() {
+    public String siginIn(HttpServletRequest request) {
         log.info("/members/sign-in GET - forwarding to jps");
+
+        //요청 정보 헤더 안에는 Referer라는 키가 있는데
+        //여기 값은 이 페이지로 들어올 때 어디에서 왔는지에 대한
+        //URI정보가 기록되어 있음
+        String referer = request.getHeader("Referer");
+        log.info("referer : {}",referer);
         return "members/sign-in";
     }
 
     //로그인 검증 요청
     //RedirectAttributes 리다이렉션시 2번째 응답에 데이터를 보내기 위함
     @PostMapping("/sign-in")
-    public String signIn(LoginRequestDTO dto, RedirectAttributes ra, HttpServletResponse response) {
+    public String signIn(LoginRequestDTO dto,
+                         RedirectAttributes ra,
+                         HttpServletResponse response,
+                         HttpServletRequest request,
+                         String account) {
         log.info("/member/sign-in POST ! - {}", dto);
         LoginResult result = memberService.authenticate(dto);
 
         //로그인 성공시
         if (result == SUCCESS) {
+            //서버에서 세션에 로그인 정보를 저장
+            memberService.maintainLoginState(request.getSession(), dto.getAccount());
+
+            /*
             //쿠키 생성
             Cookie loginCookie = new Cookie("login", "홍길동");
             //쿠키 셋팅 => 쿠키 유효범위 설정, 수명 설정
@@ -84,6 +102,8 @@ public class MemberController {
 
             //쿠키를 응답시에 실어서 클라이언트에게 전송
             response.addCookie(loginCookie);
+            */
+
 
             return "redirect:/";
         }
@@ -92,5 +112,16 @@ public class MemberController {
         ra.addFlashAttribute("msg", result);
         //로그인 실패시
         return "redirect:/members/sign-in";
+    }
+
+    @GetMapping("/sign-out")
+    public String signOut(HttpSession session) {
+        //세션에서 login 정보를 제거
+        session.removeAttribute("login");
+
+        //세션을 초기화 (세션 만료시간)
+        session.invalidate();
+
+        return "redirect:/";
     }
 }
