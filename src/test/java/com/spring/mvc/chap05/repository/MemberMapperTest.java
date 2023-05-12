@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberMapperTest {
+
     @Autowired
     MemberMapper memberMapper;
 
@@ -19,25 +20,23 @@ class MemberMapperTest {
 
     @Test
     @DisplayName("회원가입에 성공해야 한다.")
-    void saveTest(){
-        //given
+    void registerTest() {
         Member member = Member.builder()
                 .account("lion")
-                .password(encoder.encode("1111"))
-                .name("사자")
-                .email("lion@aaa.aaa")
+                .password(encoder.encode("aaa1234"))
+                .name("라이옹~")
+                .email("lion@naver.com")
                 .build();
-        //when
-        boolean save = memberMapper.save(member);
 
-        //then
-        assertTrue(save);
+        boolean flag = memberMapper.save(member);
+
+        assertTrue(flag);
     }
 
     @Test
     @DisplayName("peach라는 계정명으로 회원을 조회하면" +
-            "그 회원의 이름이 복숭아여야 한다.")
-    void findMemberTest(){
+            " 그 회원의 이름이 천도복숭아여야 한다.")
+    void findMemberTest() {
         //given
         String acc = "peach";
 
@@ -46,32 +45,48 @@ class MemberMapperTest {
 
         //then
         System.out.println("foundMember = " + foundMember);
-        assertEquals("복숭아",foundMember.getName());
+        assertEquals("천도복숭아", foundMember.getName());
     }
 
     @Test
     @DisplayName("계정명이 peach인 경우 결과값이 1이 나와야 한다.")
-    //중복되는 경우 1, 신규 멤버의 경우 0
-    void accountDuplicateTest(){
-        //given
+    void accountDuplicateTest() {
+        // given
         String acc = "peach";
-        String email = "peach@aaa.aaa";
+
         //when
-        int account = memberMapper.isDuplicate("email", email);
+        int count = memberMapper.isDuplicate("account", acc);
+
         //then
-        System.out.println("account = " + account);
-        assertEquals(1,account);
+        assertEquals(1, count);
+    }
+
+    @Test
+    @DisplayName("이메일이 aaa@bbb.com인 경우 결과값이 1이 나와야 한다.")
+    void emailDuplicateTest() {
+        // given
+        String email = "aaa@bbb.com";
+
+        //when
+        int count = memberMapper.isDuplicate("email", email);
+
+        //then
+        assertEquals(1, count);
     }
 
     @Test
     @DisplayName("비밀번호가 암호화 되어야 한다.")
-    void encodingTest(){
-        //인코딩 전 패스워드
+    void encodingTest() {
+
+        // 인코딩 전 패스워드
         String rawPassword = "abc1234!";
 
-        //인코딩 후 패스워드
+        // 인코딩 후 패스워드
         String encodedPassword = encoder.encode(rawPassword);
 
+        System.out.println("rawPassword = " + rawPassword);
         System.out.println("encodedPassword = " + encodedPassword);
+
     }
+
 }

@@ -2,19 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- header -->
-<style>
-    .container.wrap {
-        margin-top: 200px;
-    }
-</style>
 <header>
     <div class="inner-header">
         <h1 class="logo">
             <a href="/">
-                <img src="/assets/img/head.png" alt="로고이미지">
+                <img src="/assets/img/logo.png" alt="로고이미지">
             </a>
         </h1>
-        <h2 class="intro-text">Welcome ${(login == null)? '' : login.account}</h2>
+        <h2 class="intro-text">Welcome ${(login == null) ? '' : login.account}</h2>
         <a href="#" class="menu-open">
             <span class="menu-txt">MENU</span>
             <span class="lnr lnr-menu"></span>
@@ -31,15 +26,16 @@
             <li><a href="/board/list">Board</a></li>
             <li><a href="#">Contact</a></li>
 
-            <c:if test="${sessionScope.login == null}">
+            <c:if test="${login == null}">
                 <li><a href="/members/sign-up">Sign Up</a></li>
                 <li><a href="/members/sign-in">Sign In</a></li>
             </c:if>
 
-            <c:if test="${sessionScope.login != null}">
+            <c:if test="${login != null}">
                 <li><a href="#">My Page</a></li>
                 <li><a href="/members/sign-out">Sign Out</a></li>
             </c:if>
+            
         </ul>
     </nav>
 

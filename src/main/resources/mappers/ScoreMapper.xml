@@ -13,15 +13,21 @@
         SELECT
             *
         FROM tbl_score
-        <if test="sort == 'num'">ORDER BY stu_num</if>
-        <if test="sort == 'name'">ORDER BY name</if>
-        <if test="sort == 'avg'">ORDER BY average</if>
+        <if test="sort == 'num'">
+            ORDER BY stu_num
+        </if>
+        <if test="sort == 'name'">
+            ORDER BY stu_name
+        </if>
+        <if test="sort == 'avg'">
+            ORDER BY average DESC
+        </if>
     </select>
 
     <insert id="save">
         INSERT INTO tbl_score
-         (name, kor, eng, math, total, average, grade)
-        VALUES (#{name}, #{kor},
+         (stu_name, kor, eng, math, total, average, grade)
+        VALUES (#{stuName}, #{kor},
                 #{eng}, #{math}, #{total},
                 #{average}, #{grade})
     </insert>

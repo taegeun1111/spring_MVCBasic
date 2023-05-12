@@ -2,12 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
-    <%@ include file="include/static-head.jsp" %>
-</head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<%@ include file="include/static-head.jsp" %>
+
 <style>
     #main-title {
         width: 40%;
@@ -15,23 +15,29 @@
         font-size: 40px;
         font-weight: 700;
         color: orange;
+        text-align: center;
     }
 </style>
-
+</head>
 <body>
-    <%@ include file ="include/header.jsp" %>
 
+    <%@ include file="include/header.jsp" %>
 
-    <!-- dto값 -->
-    <!-- session.getAttribute("login") -->
     <h1 id="main-title">
+        <%-- session.getAttribute("login") --%>
         <c:if test="${sessionScope.login == null}">
-            초보자님 안녕하세요~
+            초보자님 안녕하세요~~
         </c:if>
         <c:if test="${sessionScope.login != null}">
-            ${sessionScope.login.nickname}님 안녕하세요
+            ${sessionScope.login.nickName}님 하이룽~
         </c:if>
     </h1>
-</body>
+    
+       
+   
 
+    
+
+
+</body>
 </html>

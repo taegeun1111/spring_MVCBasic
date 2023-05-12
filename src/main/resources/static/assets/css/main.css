@@ -2,20 +2,20 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: #f0f0f0;
+    font-family: 'Single Day', cursive;
+}
+
 button {
     outline: none;
     border: none;
 }
 
-
-
 #wrap {
     width: 60%;
     margin: 100px auto;
-    font-family: 'Single Day', cursive;
 }
-
-
 
 
 /* reset */
@@ -24,17 +24,8 @@ a {
     text-decoration: none;
 }
 
-button,
-input {
-    outline: none;
-    border: none;
-}
 
 /* common style */
-.wrap {
-    font-size: 15px;
-    font-family: 'Noto Sans KR', sans-serif;
-}
 .hide {
     display: none !important;
 }
@@ -47,7 +38,6 @@ header {
     width: 100%;
     top: 0;
     z-index: 1000;
-    margin-bottom: 100px;
 }
 
 header.on {

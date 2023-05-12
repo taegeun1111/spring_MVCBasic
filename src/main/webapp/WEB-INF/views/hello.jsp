@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <h1>jsp파일 테스트중wwwww</h1>
+
+    <h1>jsp파일 테스트중입니다~~</h1>
+
 </body>
 </html>

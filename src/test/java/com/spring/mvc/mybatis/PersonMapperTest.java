@@ -17,14 +17,14 @@ class PersonMapperTest {
     PersonMapper mapper;
 
     @Test
-    @DisplayName("Mabits Mapper로 사람정보 저장에 성공해야 한다.")
-    void saveTest(){
+    @DisplayName("마이바티스 매퍼로 사람정보 저장에 성공해야 한다.")
+    void saveTest() {
         //given
         Person p = Person.builder()
-                .personAge(23)
-                .personName("영수")
+                .personName("김마바")
+                .personAge(44)
                 .build();
-        //when
+        // when
         boolean flag = mapper.save(p);
 
         //then
@@ -32,15 +32,15 @@ class PersonMapperTest {
     }
 
     @Test
-    @DisplayName("Mabits Mapper로 사람정보 수정에 성공해야 한다.")
-    void changeTest(){
+    @DisplayName("마이바티스 매퍼로 사람정보 수정에 성공해야 한다.")
+    void changeTest() {
+        //given
         Person p = Person.builder()
-                .personName("수정합니다")
-                .personAge(50)
-                .id(1L)
+                .personName("마바수정")
+                .personAge(88)
+                .id(3L)
                 .build();
-
-        //when
+        // when
         boolean flag = mapper.change(p);
 
         //then
@@ -48,36 +48,42 @@ class PersonMapperTest {
     }
 
     @Test
-    @DisplayName("Mabits Mapper로 사람정보 삭제에 성공해야 한다.")
-    void removeTest(){
+    @DisplayName("마이바티스 매퍼로 사람정보 삭제에 성공해야 한다.")
+    void removeTest() {
+        //given
         long id = 6L;
-
-        //when
+        // when
         boolean flag = mapper.remove(id);
-
         //then
         assertTrue(flag);
     }
 
     @Test
-    @DisplayName("Mabits Mapper로 사람정보 출력에 성공해야 한다.")
-    void findAllTest(){
-        //when
-        List<Person> all = mapper.findAll();
+    @DisplayName("마이바티스 매퍼로 사람정보 전체조회에 성공해야 한다.")
+    void findAllTest() {
+        //given
+
+        // when
+        List<Person> people = mapper.findAll();
         //then
-        all.forEach(System.out::println);
-        assertEquals(7,all.size());
+        for (Person person : people) {
+            System.out.println(person);
+        }
+        assertEquals(5, people.size());
     }
 
     @Test
-    @DisplayName("Mabits Mapper로 사람정보 출력에 성공해야 한다.")
-    void findOneTest(){
-        //when
-        long id = 1L;
+    @DisplayName("마이바티스 매퍼로 사람정보 개별조회에 성공해야 한다.")
+    void findOneTest() {
+        //given
+        long id = 5L;
+        // when
+        Person p = mapper.findOne(id);
         //then
-        Person one = mapper.findOne(id);
-        System.out.println("one = " + one);
-        assertEquals("수정합니다", one.getPersonName());
-        assertNotNull(one);
+        System.out.println("p = " + p);
+        assertEquals("춘식이", p.getPersonName());
+        assertEquals(5, p.getPersonAge());
+        assertNotNull(p);
     }
+
 }

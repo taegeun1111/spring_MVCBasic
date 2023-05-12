@@ -3,11 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.mvc.chap05.repository.ReplyMapper">
+
     <insert id="save">
         INSERT INTO tbl_reply
             (reply_text, reply_writer, board_no)
         VALUES
-            (#{replyText},#{replyWriter},#{boardNo})
+            (#{replyText}, #{replyWriter}, #{boardNo})
     </insert>
 
     <update id="modify">
@@ -20,20 +21,19 @@
         DELETE FROM tbl_reply
         WHERE reply_no = #{replyNo}
     </delete>
-<!--select는 resultType이 꼭 들어가야 한다.-->
-<!-- 다중 컬럼은 객체 reply생략 가능 -->
-    <select id="findOne" resultType="com.spring.mvc.chap05.entity.Reply">
+
+    <select id="findOne" resultType="reply">
         SELECT
-        reply_no, reply_text, reply_writer,
-        reply_date, board_no
+            reply_no, reply_text, reply_writer
+            , reply_date, board_no
         FROM tbl_reply
         WHERE reply_no = #{replyNo}
     </select>
 
     <select id="findAll" resultType="reply">
         SELECT
-        reply_no, reply_text, reply_writer,
-        reply_date, board_no
+            reply_no, reply_text, reply_writer
+            , reply_date, board_no
         FROM tbl_reply
         WHERE board_no = #{bn}
         ORDER BY reply_no
@@ -45,4 +45,5 @@
         FROM tbl_reply
         WHERE board_no = #{boardNo}
     </select>
+
 </mapper>

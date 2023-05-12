@@ -1,11 +1,9 @@
 package com.spring.mvc.chap05.api;
 
-import com.spring.mvc.chap05.dto.Page.Page;
-import com.spring.mvc.chap05.dto.ReplyListResponseDTO;
-import com.spring.mvc.chap05.dto.ReplyModifyRequestDTO;
-import com.spring.mvc.chap05.dto.ReplyPostRequestDTO;
-import com.spring.mvc.chap05.entity.Reply;
-import com.spring.mvc.chap05.repository.ReplyMapper;
+import com.spring.mvc.chap05.dto.request.ReplyModifyRequestDTO;
+import com.spring.mvc.chap05.dto.response.ReplyListResponseDTO;
+import com.spring.mvc.chap05.dto.request.ReplyPostRequestDTO;
+import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,16 +12,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
-
 import static org.springframework.http.ResponseEntity.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/replies")
 @Slf4j
-//클라이언트의 접근을 어떤 app에서만 혀용할 것인가
-@CrossOrigin(origins = "http://127.0.0.1:5501")
+// 클라이언트의 접근을 어떤 app에서만 허용할것인가
+@CrossOrigin(origins = {"http://127.0.0.1:5500"})
 public class ReplyController {
 
     private final ReplyService replyService;
@@ -48,30 +44,31 @@ public class ReplyController {
         return ok().body(replyList);
     }
 
-    //댓글 등록 요청
-    //@RequestBody 요청 메세지 body에 JOSN 전송
-    //@Validated : dto에 있는 @Notblank 검증
+    // 댓글 등록 요청
     @PostMapping
     public ResponseEntity<?> create(
-            @Validated @RequestBody ReplyPostRequestDTO dto
-            , BindingResult result
+            // 요청 메시지 바디에 JSON으로 보내주세요
+           @Validated @RequestBody ReplyPostRequestDTO dto
+            , BindingResult result // 검증결과를 가진 객체
     ) {
-        //입력값 검증에 걸리면 4xx 상태코드 리턴
+        // 입력값 검증에 걸리면 4xx 상태코드 리턴
         if (result.hasErrors()) {
             return ResponseEntity
                     .badRequest()
                     .body(result.toString());
         }
-        log.info("/api/v1/replies : POST!");
-        log.info("param : {}", dto);
 
-        //서비스에 비즈니스 로직 처리 위임
+        log.info("/api/v1/replies : POST! ");
+        log.info("param: {} ", dto);
+
+        // 서비스에 비즈니스 로직 처리 위임
         try {
             ReplyListResponseDTO responseDTO = replyService.register(dto);
-            //성공 시 클라이언트에 응답하기
+            // 성공시 클라이언트에 응답하기
             return ResponseEntity.ok().body(responseDTO);
         } catch (Exception e) {
-            log.warn("500 Status code response!! caused by : {}", e.getMessage());
+            // 문제발생 상황을 클라이언트에게 전달
+            log.warn("500 Status code response!! caused by: {}", e.getMessage());
             return ResponseEntity
                     .internalServerError()
                     .body(e.getMessage());
@@ -79,36 +76,42 @@ public class ReplyController {
 
     }
 
-    //댓글 삭제 요청
+
+    // 댓글 삭제 요청
     @DeleteMapping("/{replyNo}")
     public ResponseEntity<?> remove(
-            @PathVariable Long replyNo
+            @PathVariable(required = false) Long replyNo
     ) {
         if (replyNo == null) {
             return ResponseEntity
                     .badRequest()
-                    .body("댓글 번호 미입력");
+                    .body("댓글 번호를 보내주세요!");
         }
 
         log.info("/api/v1/replies/{} DELETE!", replyNo);
 
         try {
-            ReplyListResponseDTO responseDTO = replyService.delete(replyNo);
-            return ResponseEntity.ok().body(responseDTO);
+            ReplyListResponseDTO responseDTO
+                    = replyService.delete(replyNo);
+            return ResponseEntity
+                    .ok()
+                    .body(responseDTO);
         } catch (Exception e) {
             return ResponseEntity
                     .internalServerError()
                     .body(e.getMessage());
         }
+
     }
 
-    //댓글 수정 요청
-    @PutMapping("/{replyNo}/")
-//    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
+
+    // 댓글 수정 요청
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<?> modify(
             @Validated @RequestBody ReplyModifyRequestDTO dto
             , BindingResult result
     ) {
+
         if (result.hasErrors()) {
             return ResponseEntity
                     .badRequest()
@@ -120,7 +123,7 @@ public class ReplyController {
             ReplyListResponseDTO responseDTO = replyService.modify(dto);
             return ResponseEntity.ok().body(responseDTO);
         } catch (Exception e) {
-            log.warn(e.getMessage());
+            log.warn("500 status code! caused by: {}", e.getMessage());
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }

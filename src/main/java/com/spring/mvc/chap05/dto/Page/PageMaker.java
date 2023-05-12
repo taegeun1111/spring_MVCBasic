@@ -1,6 +1,5 @@
-package com.spring.mvc.chap05.dto.Page;
+package com.spring.mvc.chap05.dto.page;
 
-import com.spring.mvc.chap05.dto.Page.Page;
 import lombok.Getter;
 import lombok.ToString;
 

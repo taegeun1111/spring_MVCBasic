@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 
@@ -19,19 +20,21 @@ public class DatabaseConfig {
     // 커넥션 풀 설정
     // : DB 접속시 사용하는 리소스를 관리하는 프로그램
 
-    /*
-    @Bean
-    public DataSource dataSource() {
-        // 히카리 설정
-        HikariConfig config = new HikariConfig();
-        config.setUsername("root");
-        config.setPassword("1111");
-        config.setJdbcUrl("jdbc:mariadb://localhost:3306/spring");
-        config.setDriverClassName("org.mariadb.jdbc.Driver");
-
-        return new HikariDataSource(config);
-    }
-    */
-
+//    @Bean
+//    public DataSource dataSource() {
+//        // 히카리 설정
+//        HikariConfig config = new HikariConfig();
+//        config.setUsername("root");
+//        config.setPassword("1234");
+//        config.setJdbcUrl("jdbc:mariadb://localhost:3306/spring");
+//        config.setDriverClassName("org.mariadb.jdbc.Driver");
+//
+//        return new HikariDataSource(config);
+//    }
+//
+//    @Bean
+//    public JdbcTemplate jdbcTemplate() {
+//        return new JdbcTemplate(dataSource());
+//    }
 
 }

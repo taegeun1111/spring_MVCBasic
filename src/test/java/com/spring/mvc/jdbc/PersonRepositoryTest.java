@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,52 +16,59 @@ class PersonRepositoryTest {
     PersonRepository repository;
 
     @Test
-    @DisplayName("사람의 이름과 나이 정보를 DB person table에 잘 삽입해야 한다.")
-    void saveTest(){
-        //given
+    @DisplayName("사람의 이름과 나이 정보를 " +
+            "DB person table에 잘 삽입해야 한다.")
+    void saveTest() {
+        // given
         Person p = new Person();
-        p.setPersonName("수길이");
-        p.setPersonAge(60);
-
-        //when
+        p.setPersonName("천지호");
+        p.setPersonAge(33);
+        // when
         repository.save(p);
-        //then
+        // then
+
     }
+
     @Test
-    @DisplayName("사람의 이름과 나이 정보를 DB person table에 잘 tnwjd해야 한다.")
-    void insertTest(){
-        //given
+    @DisplayName("사람의 이름과 나이 정보를 " +
+            "DB person table에 잘 수정해야 한다.")
+    void updateTest() {
+        // given
         Person p = new Person();
-        p.setPersonName("수정");
+        p.setPersonName("수정수정");
         p.setPersonAge(99);
         p.setId(1L);
-        //when
-        repository.insert(p);
-        //then
+        // when
+        repository.update(p);
+        // then
+
     }
 
-
     @Test
-    @DisplayName("사람의 이름과 나이 정보를 DB person table에 잘 tnwjd해야 한다.")
-    void removeTest(){
-        //given
-        long id = 3L;
-        //when
+    @DisplayName("사람의 이름과 나이 정보를 " +
+            "DB person table에 잘 삭제해야 한다.")
+    void removeTest() {
+        // given
+        long id = 2L;
+        // when
         repository.remove(id);
-        //then
+        // then
+
     }
 
+
     @Test
-    void findAllTest(){
+    void findAllTest() {
         List<Person> people = repository.findAll();
-        for (Person person : people) {
-            System.out.println("person = " + person);
+        for (Person p : people) {
+            System.out.println("p = " + p);
         }
     }
 
     @Test
-    void findOneTest(){
+    void findOneTest() {
         Person p = repository.findOne(4L);
         System.out.println("p = " + p);
     }
+
 }
